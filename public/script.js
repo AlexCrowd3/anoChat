@@ -17,7 +17,7 @@ var pass_for_delete = false;
 // Функция для выполнения SQL-запроса
 async function executeQuery(sql, params = []) {
     try {
-        const response = await fetch('http://localhost:3000/query', {
+        const response = await fetch('https://alexcrowd3-anochat-f80f.twc1.net/query', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
