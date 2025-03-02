@@ -1,0 +1,17 @@
+# VS Code-specific files
+.vscode/
+*.code-workspace
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Файлы логов и временные файлы
+*.log
+*.tmp
+
+# Другие общие исключения
+node_modules/
+dist/
+build/
+.env

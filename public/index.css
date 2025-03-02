@@ -1,0 +1,1137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: "Jura", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+    font-weight: 400;
+}
+body {
+    width: 100%;
+    max-width: 550px;
+    height: 100vh;
+    background-color: #0092FF;
+    text-align: center;
+    overflow: hidden;
+}
+#top-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 640px;
+    height: 80px;
+    max-width: 650px;
+}
+#profil {
+    width: 8vw;
+    margin-left: 15%;
+}
+#logo {
+    width: 17.07vw;
+    position: absolute;
+    margin-left: 41.465vw;
+    margin-top: 20px;
+}
+#coins {
+    width: auto;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-right: 15%;
+}
+#coins img {
+    width: 5vw;
+}
+#coins #count {
+    float: left;
+    color: #ffffff;
+    font-size: 130%;
+    margin-left: 5%;
+}
+#gif-chat {
+    width: 80%;
+}
+#send-review {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #43A7FD;
+    border-radius: 10px;
+    height: 33px;
+    padding: 0 5px;
+}
+#send-review p {
+    margin-top: 5px;
+    color: #ffffff60;
+    font-size: 16pt;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+#send-review img {
+    height: 30px;
+}
+#onclickReviewWindow {
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 350px;
+    background-color: #ffffff;
+    border-radius: 30px 30px 0 0;
+    text-align: center;
+    transform: translateY(+400px);
+    transition: 1s;
+}
+#onclickReviewWindow #but-hide {
+    padding: 4px auto;
+    font-size: 24pt;
+    font-weight: bold;
+    color: #43A7FD;
+    border: solid 3px #43A7FD;
+    border-radius: 30px;
+    margin-top: 10px;
+    width: 215px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+#onclickReviewWindow #text-in-ReviewWindow {
+    color: #6D6D6D;
+    font-size: 16pt;
+}
+#onclickReviewWindow #sec-text-in-ReviewWindow {
+    color: #6D6D6D;
+    font-size: 20pt;
+    font-weight: 600;
+    margin-top: 40px;
+}
+.anim-onclickReviewWindow {
+    transform: translateY(-500px);
+}
+#opasity-win {
+    z-index: 1;
+    content: "";
+    width: 100%;
+    height: 100vh;
+    background-color: #00000060;
+    position: absolute;
+    top: 0;
+    transform: translateY(+100vh);
+    transition: 0.5s;
+}
+#text-info {
+    margin-top: 60px;
+    color: #ffffff;
+    font-size: 14pt;
+    font-weight: 300;
+}
+#but-start-game {
+    text-align: center;
+    height: 54px;
+    width: 80%;
+    margin-left: 10%;
+    font-size: 32pt;
+    border: solid 2px #fff;
+    border-radius: 15px;
+    color: #fff;
+    margin-top: 5vh;
+}
+#profilWindow {
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 600px;
+    background-color: #ffffff;
+    border-radius: 30px 30px 0 0;
+    text-align: center;
+    transition: 1s;
+    transform: translateY(+600px);
+}
+#profilWindow #but-hide {
+    padding: 4px auto;
+    font-size: 24pt;
+    font-weight: bold;
+    color: #43A7FD;
+    border: solid 3px #43A7FD;
+    border-radius: 30px;
+    margin-top: 10px;
+    width: 215px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}
+#but-option {
+    text-align: center;
+    height: 54px;
+    width: 80%;
+    margin-left: 10%;
+    font-size: 20pt;
+    border: solid 2px #0092FF;
+    border-radius: 15px;
+    color: #0092FF;
+    margin-top: 20px;
+}
+#On_load_window {
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    max-width: 550px;
+    background-color: #ffffff;
+    position: absolute;
+    top: 0;
+    animation: load 4s linear forwards;
+}
+@keyframes load {
+    85% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-150vh);
+    }
+}
+#On_load_window #top_p {
+    margin-top: 2vh;
+    color: #0092FF;
+    font-size: 24pt;
+    transform: translateY(-100px);
+    animation: window_top_p 0.2s 1s forwards alternate;
+}
+@keyframes window_top_p {
+    from {
+        transform: translateY(-100px) scale(0.5);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+#On_load_window img {
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 27vh;
+    animation: window_img 0.5s forwards alternate;
+}
+@keyframes window_img {
+    from {
+        transform: translateY(-60vh);
+    }
+    to {
+        transform: translateY(0px);
+    }
+}
+#On_load_window #title {
+    font-size: 96pt;
+    color: #0092FF;
+    margin-top: 15vh;
+    animation: title 0.5s forwards alternate;
+}
+@keyframes title {
+    from {
+        transform: translateY(+20vh) scale(0.8);
+    }
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+#On_load_window #load_bar {
+    content: "";
+    background-color: #32C4FF;
+    height: 12px;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    margin-top: 3vh;
+    animation: load_bar 1.5s 2s forwards alternate;
+    opacity: 0;
+}
+@keyframes load_bar {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+#On_load_window #load_bar div {
+    content: "";
+    background-color: #0092FF;
+    height: 12px;
+    width: 12px;
+    border-radius: 30px;
+    animation: load_bar_div 1s 2.5s forwards alternate;
+}
+@keyframes load_bar_div {
+    from {
+        width: 12px;
+    }
+    to {
+        width: 100%;
+    }
+}
+#On_load_window #bot_p {
+    color: #6D6D6D;
+    font-size: 20pt;
+    animation: bot_p 0.5s forwards alternate;
+}
+@keyframes bot_p {
+    from {
+        transform: translateY(+35vh) scale(0.8);
+    }
+    to {
+        transform: translateY(0) scale(1);
+    }
+}
+#start-game {
+    z-index: 2;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 300px;
+    background-color: #ffffff;
+    border-radius: 30px 30px 0 0;
+    text-align: center;
+    transition: 1s;
+    transform: translateY(+300px);
+}
+#start-game #but-hide {
+    padding: 4px auto;
+    font-size: 24pt;
+    font-weight: bold;
+    color: #43A7FD;
+    border: solid 3px #43A7FD;
+    border-radius: 30px;
+    margin-top: 10px;
+    width: 215px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5vh;
+}
+#start-game #but-mode {
+    text-align: center;
+    height: 54px;
+    width: 80%;
+    margin-left: 10%;
+    font-size: 24pt;
+    border: solid 2px #0092FF;
+    border-radius: 15px;
+    color: #0092FF;
+    margin-top: 3vh;
+    font-weight: 600;
+}
+#roomGame {
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: #0092FF;
+    position: absolute;
+    top: 0;
+    transition: 0.5s;
+    transform: translateY(-100vh);
+}
+#roomGame p {
+    font-size: 24pt;
+    color: #fff;
+    margin-top: 25px;
+    margin-left: 25px;
+    text-align: left;
+}
+#roomGame #settings {
+    width: 80%;
+    margin-top: 15vh;
+    margin-left: 10%;
+    text-align: center;
+}
+#roomGame #settings h3 {
+    font-size: 20pt;
+    color: #fff;
+    font-weight: 700;
+}
+#roomGame #settings .inp {
+    border: solid 2px #fff;
+    background-color: #0092FF;
+    height: 35px;
+    width: 100%;
+    font-size: 20pt;
+    color: #fff;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-left: 3px;
+}
+@keyframes inpError {
+    0% {
+        border: solid 2px #ff2a2a;
+        transform: translateX(+10px);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    50% {
+        transform: translateX(+10px);
+    }
+    75% {
+        transform: translateX(-10px);
+        border: solid 2px #ff2a2a;
+    }
+    100% {
+        transform: translateX(0px);
+        border: solid 2px #fff;
+    }
+}
+#roomGame #settings .inp:focus {
+    outline:none;
+    border: solid 2px #fff;
+    box-shadow: 0px 0px 10px 2px #ffffff83;
+}
+#roomGame #settings .inp::placeholder {
+    color: #ffffff81;
+}
+#roomGame #settings div {
+    background-color: #0092FF;
+    border: solid 2px #fff;
+    border-radius: 5px;
+    padding: auto;
+    height: 35px;
+    margin-top: 10px;
+    color: #fff;
+    font-size: 20pt;
+    transition: 0.5s;
+}
+#roomGame #settings .active {
+    background-color: #ffffff;
+    border: solid 2px #fff;
+    border-radius: 5px;
+    padding: auto;
+    height: 35px;
+    margin-top: 10px;
+    color: #0092FF;
+    font-size: 20pt;
+    box-shadow: 0px 0px 10px 2px #ffffff83;
+}
+#roomGame #settings p {
+    width: 100%;
+    text-align: center;
+    margin-left: 0;
+}
+
+#roomGame #settings #Player_count {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 86%;
+    height: 10px;
+    background: #ffffff80;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 15px;
+}
+#roomGame #settings #Player_count::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 30px;
+    width: 30px;
+    background: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+#roomGame #settings #input_value {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: auto;
+    height: 35px;
+    width: 35px;
+    margin-top: 15px;
+    color: #0092FF;
+    font-size: 20pt;
+    font-weight: 700;
+    margin-left: calc(9% - 10px);
+    transition: 0.5s;
+}
+#roomGame #settings #input_value::after {
+    content: "";
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    height: 15px;
+    background-color: #fff;
+    z-index: 3;
+    top: 0;
+    transform: translateY(-40px) translateX(+9px);
+    position: relative;
+    display: block;
+    width: 15px;
+}
+#roomGame #make_room {
+    padding: auto;
+    height: 40px;
+    width: 80%;
+    margin-left: 10%;
+    border: solid 2px #ffffff;
+    color: #fff;
+    font-size: 20pt;
+    border-radius: 10px;
+    margin-top: 5vh;
+    font-weight: 600;
+}
+#inRoomGame {
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: #0092FF;
+    position: absolute;
+    top: 0;
+    transition: 0.5s;
+    transform: translateY(-100vh);
+}
+#inRoomGame p {
+    font-size: 24pt;
+    color: #fff;
+    margin-top: 25px;
+    margin-left: 25px;
+    text-align: left;
+}
+#inRoomGame #settings {
+    width: 80%;
+    margin-top: 15vh;
+    margin-left: 10%;
+    text-align: center;
+}
+#inRoomGame #settings h3 {
+    font-size: 20pt;
+    color: #fff;
+    font-weight: 700;
+}
+#inRoomGame #settings .inp {
+    border: solid 2px #fff;
+    background-color: #0092FF;
+    height: 35px;
+    width: 100%;
+    font-size: 20pt;
+    color: #fff;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding-left: 3px;
+}
+#inRoomGame #search_room_ready {
+    padding: auto;
+    height: 40px;
+    width: 80%;
+    margin-left: 10%;
+    border: solid 2px #ffffff;
+    color: #fff;
+    font-size: 20pt;
+    border-radius: 10px;
+    margin-top: 15vh;
+    font-weight: 600;
+}
+#inRoomGame #settings .inp::placeholder {
+    color: #ffffff81;
+}
+#inRoomGame #settings .inp:focus {
+    outline:none;
+    border: solid 2px #fff;
+    box-shadow: 0px 0px 10px 2px #ffffff83;
+}
+#ErrorWindow {
+    z-index: 3;
+    position: fixed;
+    top: 20px;
+    left: 5%;
+    background-color: #ff2a2a;
+    width: 90%;
+    height: auto;
+    padding: 15px 5px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14pt;
+    transition: 0.5s;
+    transform: translateY(-20vh);
+}
+#search_players {
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: #0092FF;
+    position: absolute;
+    top: 0;
+    transition: 0.5s;
+    transform: translateY(+100vh);
+}
+#search_players #load_bar_room {
+    content: "";
+    height: 5px;
+    width: 5px;
+    background-color: #57b0ff;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    margin-top: 10px;
+    animation: loadBarRoomAnim 3s linear infinite;
+}
+@keyframes loadBarRoomAnim {
+    from {
+        width: 10px;
+        background-color: #57b0ff;
+    }
+    50% {
+        width: 40%;
+        background-color: #e9f5ff;
+        box-shadow: 0px 0px 10px 2px #ffffff83;
+    }
+    from {
+        width: 10px;
+        background-color: #57b0ff;
+    }
+}
+#search_players h3 {
+    margin-top: 30px;
+    font-size: 20pt;
+    color: #ffffff;
+    font-weight: 600;
+}
+#search_players #usersInRoom {
+    height: auto;
+    margin-top: 10vh;
+    width: 80%;
+    margin-left: 10%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+}
+#search_players #usersInRoom .users {
+    width: 30%;
+    margin-bottom: 20px;
+    animation: usersLoad 0.5s forwards;
+    transition: 0.5;
+}
+@keyframes usersLoad {
+    from {
+        transform: scale(0.2);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+#search_players #usersInRoom .users img {
+    width: 100%;
+}
+#search_players #usersInRoom .users p {
+    color: #fff;
+    font-weight: 600;
+}
+#search_players h4 {
+    position: fixed;
+    bottom: 60px;
+    color: #ffffff;
+    font-size: 20pt;
+    width: 100%;
+}
+#search_players h2 {
+    position: fixed;
+    bottom: 20px;
+    color: #ffffff;
+    font-size: 22pt;
+    font-weight: 600;
+    width: 100%;
+}
+#search_players #but-cancel {
+    position: fixed;
+    bottom: 100px;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 22pt;
+    font-weight: 600;
+    width: 60%;
+    margin-left: 20%;
+    border: solid 2px #fff;
+}
+#write_question {
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: #0092FF;
+    position: absolute;
+    top: 0;
+    transition: 0.5s;
+    transform: translateY(+100vh);
+}
+#write_question .inp::placeholder {
+    color: #ffffff81;
+}
+#write_question .inp:focus {
+    outline:none;
+    border: solid 2px #fff;
+    box-shadow: 0px 0px 10px 2px #ffffff83; 
+}
+#write_question .inp {
+    border: solid 2px #fff;
+    background-color: #0092FF;
+    height: 35px;
+    width: 80%;
+    font-size: 20pt;
+    color: #fff;
+    margin-top: 20vh;
+    border-radius: 5px;
+    padding-left: 3px;
+}
+#write_question h3 {
+    font-size: 24pt;
+    margin-top: 10vh;
+    font-weight: 600;
+    color: #ffffff;
+}
+#write_question h4 {
+    padding: auto;
+    height: auto;
+    width: 80%;
+    margin-left: 10%;
+    color: #fff;
+    font-size: 14pt;
+    position: absolute;
+    bottom: 120px;
+}
+#write_question p {
+    padding: auto;
+    height: 40px;
+    width: 80%;
+    margin-left: 10%;
+    border: solid 2px #ffffff;
+    color: #fff;
+    font-size: 20pt;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 50px;
+    font-weight: 600;
+}
+#chat_room {
+    z-index: 2;
+    width: 100%;
+    height: 100vh;
+    background-color: #FFFFFF;
+    position: absolute;
+    top: 0;
+    transition: 0.5s;
+    transform: translateY(+100vh);
+}
+#chat_room #top_menu {
+    height: 60px;
+    width: 100%;
+    background-color: #0092FF;
+    padding-top: 14px;
+    position: absolute;
+    z-index: 3;
+    border-radius: 0 0 15px 15px;
+}
+#chat_room #top_menu p {
+    color: #FFFFFF;
+    font-size: 18pt;
+    font-weight: 600;
+}
+#chat_room #chat_input {
+    background-color: #0092FF;
+    height: 40px;
+    width: 90%;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 20px;
+    margin-left: 5%;
+    justify-content: space-between;
+    display: flex;
+    padding: 0 10px;
+    transition: 0.5s;
+    z-index: 4;
+}
+#chat_room #chat_input input {
+    background-color: #0092FF;
+    border: none;
+    font-size: 16pt;
+    color: #FFFFFF;
+    width: 88%;
+}
+#chat_input:has(#inp_chat:focus) {
+    width: 100%;
+    margin-left: 0px;
+    border-radius: 0px;
+    bottom: 0;
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    z-index: 4;
+}
+#chat_room #inp_chat:focus + img {
+    transform: translateY(+2px);
+
+}
+#chat_room #chat_input input::placeholder {
+    color: #ffffff81;
+}
+#chat_room #chat_input input:focus{
+    outline:none;
+}
+#chat_room #chat_input img {
+    transition: 0.5s;
+    transform: translateY(-3px) translateX(+8px);
+    height: 40px;
+}
+#chat_room #chat_input p{
+    width: 100%;
+    color: #FFFFFF;
+    font-size: 16pt;
+    margin-top: 4px;
+}
+@keyframes pulsarMin {
+    from {
+        transform: scale(0.9);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    to {
+        transform: scale(0.9);
+    }
+}
+#chat_room #chat {
+    height: 100vh;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background-color: #ffffff;
+    overflow: auto;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+#chat_room #chat::before {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    content: "";
+    background-color: #FFFFFF;
+    z-index: 2;
+}
+#chat_room #chat .titleMsg {
+    color: #0092FF;
+    font-size: 16pt;
+    width: 100%;
+    text-align: center;
+    margin-top: 20vh;
+}
+@keyframes emergeLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+@keyframes emergeRight {
+    from {
+        transform: translateX(+100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+#chat_room #chat .message_right {
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    transform: translateX(+100%);
+}
+#chat_room #chat .message_right p {
+    background: #0092FF;
+    position: relative;
+    padding: 5px 10px;
+    display: inline-block;
+    border-radius: 10px;
+    color: #FFFFFF;
+    max-width: 80%;
+    text-align: left;
+    margin-left: auto;
+    margin-right: 0px;
+    bottom: 0;
+    transition: 1s;
+}
+#chat_room #chat .message_right p::before {
+    content: "";
+    position: absolute;
+    right: 1%;
+    top: 90%;
+    width: 30px;
+    height: 15px;
+    background-color: #0092FF;
+    clip-path: polygon(80% 0, 0 0, 100% 100%);
+    border-radius: 10px;
+}
+#chat_room #chat .message_left {
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: right;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: 0.5s;
+    transform: translateX(-100%);
+}
+#chat_room #chat .message_left p {
+    background: #C7C7C7;
+    position: relative;
+    padding: 5px 10px;
+    display: block;
+    width: fit-content;
+    border-radius: 10px;
+    color: #ffffff;
+    max-width: 80%;
+    text-align: left;
+    margin-right: auto;
+    margin-left: 0px;
+    bottom: 0;
+    transition: 0.5s;
+}
+#chat_room #chat .message_left p::before {
+    content: "";
+    position: absolute;
+    left: 1%;
+    top: 90%;
+    width: 30px;
+    height: 15px;
+    background-color: #C7C7C7;
+    clip-path: polygon(100% 0, 20% 0, 0 100%);
+    border-radius: 10px;
+}
+#chat_room #chat #question_inchat {
+    margin-left: 20px;
+    margin-right: 20px;
+    border-radius: 20px;
+    text-align: left;
+    border: solid 2px #0092FF;
+    width: auto;
+    height: fit-content;
+    margin-top: 20px;
+    padding: 10px;
+    color: #0092FF;
+    font-weight: 600;
+    text-align: center;
+}
+#chat_room #chat .open{
+    background-color: #0091ff1a;
+    transition: 0.5s;
+    padding-top: 10px;
+    z-index: 4;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+#chat_room #chat .open p {
+   transition: 0.5s;
+   z-index: 4;
+   margin-right: 0px;
+}
+#chat_room #chat .open img {
+    width: 40px;
+}
+.closeMsgActive {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    content: "";
+    background-color: #00000018;
+    animation: 0.5s open forwards;
+}
+@keyframes open {
+    from {
+        height: 0px;
+    }
+    to {
+        height: 100vh;
+    }
+}
+#notification {
+    height: 200px;
+    border-radius: 0 0 30px 30px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 5;
+    background-color: #FFFFFF;
+    transition: 0.5s;
+    transform: translateY(-200px);
+}
+#notification img {
+    margin-top: 15px;
+    height: 40px;
+}
+#notification h3 {
+    font-size: 18pt;
+    color: #0092FF;
+    margin-bottom: 40px;
+    margin-top: 10px;
+}
+#notification p {
+    color: #FFFFFF;
+    background-color: #43CE43;
+    width: fit-content;
+    height: fit-content;
+    text-align: center;
+    padding: 10px 30px;
+    font-size: 18pt;
+    border-radius: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#notification p img {
+    margin-top: 0;
+    transform: translateY(+3px);
+}
+.closeKeyboardActive {
+    width: 100%;
+    height: max-content;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 3;
+    content: "";
+    animation: 0.5s open forwards;
+}
+@keyframes pulsar {
+    from {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+#load_msg_window {
+    overflow: hidden;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 5;
+    background-color: #FFFFFF;
+    padding: 0;
+    opacity: 0;
+    transform: translateY(+100vh);
+    transition: 1s;
+}
+#load_msg_window img {
+    margin-top: 25vh;
+    width: 40%;
+    transform: translateY(-50vh);
+}
+@keyframes opasityWin {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes winImg {
+    from {
+        transform: translateY(-50vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+#load_msg_window p {
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 0;
+    color: #0092FF;
+    font-size: 26pt;
+    margin-top: 20vh;
+    border-right: 3px solid #0092FF;
+    overflow: hidden;
+    white-space: nowrap;
+}  
+@keyframes winP {
+    from {
+        transform: translateY(+50vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+@keyframes printed_text {
+    from {
+      width: 0;
+    }
+    90% {
+        border-right: 3px solid #0092FF;
+    }
+    to {
+        width: 7ch;
+        border-right: 3px solid #ffffff;
+    }
+}
+@keyframes printed_text2 {
+    from {
+      width: 0;
+    }
+    90% {
+        border-right: 3px solid #0092FF;
+    }
+    to {
+        width: 10ch;
+        border-right: 3px solid #ffffff;
+    }
+}
+#open_name_user {
+    transform: translateY(+100vh);
+    transition: 0.5s;
+    width: 100%;
+    height: 100vh;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #00000060;
+    z-index: 6;
+}
+#open_name_user div{
+    color: #6D6D6D;
+    font-size: 20px;
+    padding: 50px 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 60%;
+    height: max-content;
+    border-radius: 30px;
+    background-color: #FFFFFF;
+    border: solid 3px #0092FF;
+}
+#open_name_user div p{
+    color: #ffffff;
+    background-color: #0092FF;
+    width: 40vw;
+    padding: 5px 0;
+    height: max-content;
+    position: fixed;
+    transform: translateY(-65px) translateX(+9vw);
+    border-radius: 100px;
+}
