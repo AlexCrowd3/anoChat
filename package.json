@@ -5,7 +5,8 @@
     "type": "module"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "webpack --mode production"
   },
   "name": "web-app",
   "version": "1.0.0",
