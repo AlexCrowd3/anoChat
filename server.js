@@ -39,12 +39,12 @@ app.post('/query', (req, res) => {
     });
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join('public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join('public', 'index.html'));
 });
 
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`);
+    console.log(`Сервер запущен успешно!`);
 });
