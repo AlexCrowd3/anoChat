@@ -40,11 +40,7 @@ async function executeQuery(sql, params = []) {
 window.addEventListener('load', () => {
     executeQuery('SELECT * FROM users WHERE telegram_id == ?', [urlParam])
         .then(rows => {
-            if (rows != undefined) {
-                main_id = rows.id;
-            } else {
-                main_id = 0;
-            }
+            main_id = rows.id;
         })
     executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
         .then(rows => {
