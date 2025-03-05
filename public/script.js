@@ -1,6 +1,6 @@
 var mode = 2;
 const urlParams = new URLSearchParams(window.location.search);
-let main_id = parseInt(urlParams.get('main_id'));
+let main_id;
 
 var global_user_count;
 let intervalId;
@@ -37,9 +37,19 @@ async function executeQuery(sql, params = []) {
     }
 }
 window.addEventListener('load', () => {
+    executeQuery('SELECT * FROM users WHERE user_id == ?', [parseInt(urlParams.get('main_id'))])
+        .then(rows => {
+            if (rows.length != 0) {
+                main_id = rows.id;
+            } else {
+                main_id = 0;
+            }
+        })
     executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
         .then(rows => {
-            document.getElementById("count").innerHTML = rows[0].coin_count;
+            if (main_id != 0){
+                document.getElementById("count").innerHTML = rows[0].coin_count;
+            }
         })
         .catch(err => {
             console.error('Ошибка:', err);
