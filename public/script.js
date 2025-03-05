@@ -1,7 +1,7 @@
 var mode = 2;
 const urlParams = new URLSearchParams(window.location.search);
 let main_id;
-urlParam = parseInt(urlParams.get('main_id'))
+var urlParam = parseInt(urlParams.get('main_id'))
 
 var global_user_count;
 let intervalId;
