@@ -153,7 +153,7 @@ function createRoom() {
             } else {
                 document.getElementById("ErrorWindow").innerHTML = 'Ошибка:<br>Такая комната уже существует!';
                 document.getElementById("ErrorWindow").style.transform = 'translateY(0vh)'
-                setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-20vh)', 4000);
+                setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-40vh)', 4000);
             }
         })
     } else {

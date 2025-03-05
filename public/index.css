@@ -552,7 +552,7 @@ body {
     color: #fff;
     font-size: 14pt;
     transition: 0.5s;
-    transform: translateY(-20vh);
+    transform: translateY(-40vh);
 }
 #search_players {
     z-index: 2;
