@@ -108,6 +108,7 @@ body {
     font-size: 16pt;
 }
 #onclickReviewWindow #sec-text-in-ReviewWindow {
+    position: absolute;
     text-align: center;
     height: auto;
     width: 100%;
@@ -115,7 +116,7 @@ body {
     border: solid 2px #0092FF;
     border-radius: 15px;
     color: #0092FF;
-    margin-top: 20px;
+    bottom: 20px;
     padding: 10px 30px;
     font-weight: 600;
 }
