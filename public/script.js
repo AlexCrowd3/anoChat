@@ -38,10 +38,11 @@ async function executeQuery(sql, params = []) {
     }
 }
 window.addEventListener('load', () => {
-    executeQuery('SELECT * FROM users WHERE telegram_id == ?', [urlParam])
+    quer = 'SELECT * FROM users WHERE telegram_id == ' + urlParam;
+    executeQuery(quer)
         .then(rows => {
             console.log(rows[0].id)
-            main_id = parseInt(rows[0].id);
+            main_id = rows[0].id;
         })
     executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
         .then(rows => {
