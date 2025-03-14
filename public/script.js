@@ -1,6 +1,6 @@
 var mode = 2;
 const urlParams = new URLSearchParams(window.location.search);
-let main_id;
+let main_id = 0;
 let urlParam = parseInt(urlParams.get('main_id'))
 
 var global_user_count;
@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
     executeQuery(quer)
         .then(rows => {
             console.log(rows[0].id)
-            main_id = rows[0].id;
+            main_id = parseInt(rows[0].id);
         })
     executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
         .then(rows => {
