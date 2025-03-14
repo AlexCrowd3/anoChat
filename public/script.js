@@ -41,15 +41,13 @@ window.addEventListener('load', () => {
     quer = 'SELECT * FROM users WHERE telegram_id == ' + urlParam;
     executeQuery(quer)
         .then(rows => {
-            console.log(rows[0].id)
             main_id = parseInt(rows[0].id);
         })
     quer = 'SELECT * FROM users WHERE id == ' + main_id;
     executeQuery(quer)
-        .then(row => {
+        .then(row1 => {
             if (main_id != 0){
-                console.log(main_id)
-                document.getElementById("count").innerHTML = row[0].coin_count;
+                document.getElementById("count").innerHTML = row1[0].coin_count;
             }
         })
         .catch(err => {
