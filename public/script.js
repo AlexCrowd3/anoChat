@@ -82,7 +82,7 @@ function startGame() {
 }
 function getProfil() {
     if (main_id == 0) {
-        document.getElementById("profilWindow").innerHTML = '<p id="but-hide" onclick="hideProfil()">Скрыть</p><img src="img/profil_icon_0.png" alt="" style="height: 150px;"><p id="profil_info" style="font-size: 30px; margin-top: 30px; color: #6D6D6D;">Для входа в аккаунт<br>зайдите через нашего <a href="t.me/chat_ano_bot?start" style="color: #43A7FD;">Telegram бота</a></p>';
+        document.getElementById("profilWindow").innerHTML = '<p id="but-hide" onclick="hideProfil()">Скрыть</p><img src="img/profil_icon_0.png" alt="" style="height: 150px;"><p id="profil_info" style="font-size: 30px; margin-top: 30px; color: #6D6D6D;">Для входа в аккаунт<br>зайдите через нашего <a href="https://t.me/chat_ano_bot?start" style="color: #43A7FD;">Telegram бота</a></p>';
     }
     else {
         executeQuery('SELECT * FROM users WHERE id == ?', [main_id])
