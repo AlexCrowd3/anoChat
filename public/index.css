@@ -109,9 +109,8 @@ body {
 }
 #onclickReviewWindow #sec-text-in-ReviewWindow {
     text-align: center;
-    height: 54px;
-    width: 80%;
-    margin-left: 10%;
+    height: 60px;
+    width: max-content;
     font-size: 20pt;
     border: solid 2px #0092FF;
     border-radius: 15px;
