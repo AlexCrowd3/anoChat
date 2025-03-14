@@ -44,7 +44,7 @@ window.addEventListener('load', () => {
             console.log(rows[0].id)
             main_id = parseInt(rows[0].id);
         })
-    quer = 'SELECT coin_count FROM users WHERE id == ' + main_id;
+    quer = 'SELECT * FROM users WHERE id == ' + main_id;
     executeQuery(quer)
         .then(row => {
             if (main_id != 0){
