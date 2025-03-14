@@ -50,9 +50,6 @@ window.addEventListener('load', () => {
                 document.getElementById("count").innerHTML = row1[0].coin_count;
             }
         })
-        .catch(err => {
-            console.error('Ошибка:', err);
-        });
     var quer = 'DELETE FROM user_in_game_room WHERE user_id == ' + main_id;
     executeQuery(quer)
 });
