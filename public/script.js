@@ -43,15 +43,19 @@ window.addEventListener('load', () => {
         .then(rows => {
             main_id = parseInt(rows[0].id);
         })
-    quer = 'SELECT * FROM users WHERE id == ' + main_id;
-    executeQuery(quer)
+    setTimeout(function(){ 
+        quer = 'SELECT * FROM users WHERE id == ' + main_id;
+        executeQuery(quer)
         .then(row1 => {
             if (main_id != 0){
                 console.log(row1[0].coin_count)
                 console.log(typeof row1[0].coin_count)
                 document.getElementById("count").innerHTML = parseInt(row1[0].coin_count); 
+            } else {
+                document.getElementById("count").innerHTML = 0;
             }
         })
+    },2000);
     var quer = 'DELETE FROM user_in_game_room WHERE user_id == ' + main_id;
     executeQuery(quer)
 });
