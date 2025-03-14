@@ -48,8 +48,6 @@ window.addEventListener('load', () => {
         executeQuery(quer)
         .then(row1 => {
             if (main_id != 0){
-                console.log(row1[0].coin_count)
-                console.log(typeof row1[0].coin_count)
                 document.getElementById("count").innerHTML = parseInt(row1[0].coin_count); 
             } else {
                 document.getElementById("count").innerHTML = 0;
