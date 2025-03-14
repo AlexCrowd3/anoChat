@@ -47,7 +47,9 @@ window.addEventListener('load', () => {
     executeQuery(quer)
         .then(row1 => {
             if (main_id != 0){
-                document.getElementById("count").innerHTML = row1[0].coin_count;
+                document.getElementById("count").innerHTML = parseInt(row1[0].coin_count);
+                console.log(row1[0].coin_count)
+                console.log(typeof row1[0].coin_count)
             }
         })
     var quer = 'DELETE FROM user_in_game_room WHERE user_id == ' + main_id;
