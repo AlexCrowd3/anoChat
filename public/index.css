@@ -108,10 +108,15 @@ body {
     font-size: 16pt;
 }
 #onclickReviewWindow #sec-text-in-ReviewWindow {
-    color: #6D6D6D;
+    text-align: center;
+    height: 54px;
+    width: 80%;
+    margin-left: 10%;
     font-size: 20pt;
-    font-weight: 600;
-    margin-top: 40px;
+    border: solid 2px #0092FF;
+    border-radius: 15px;
+    color: #0092FF;
+    margin-top: 20px;
 }
 .anim-onclickReviewWindow {
     transform: translateY(-500px);
