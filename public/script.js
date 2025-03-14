@@ -45,9 +45,10 @@ window.addEventListener('load', () => {
             main_id = parseInt(rows[0].id);
         })
     executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
-        .then(rows => {
+        .then(row => {
             if (main_id != 0){
-                document.getElementById("count").innerHTML = rows[0].coin_count;
+                console.log(main_id)
+                document.getElementById("count").innerHTML = row[0].coin_count;
             }
         })
         .catch(err => {
