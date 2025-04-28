@@ -38,6 +38,10 @@ async function executeQuery(sql, params = []) {
     }
 }
 window.addEventListener('load', () => {
+    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT 1 FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
+    executeQuery(quer)
+    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT 1 FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
+    executeQuery(quer)
     quer = 'SELECT * FROM users WHERE telegram_id == ' + urlParam;
     executeQuery(quer)
         .then(rows => {
@@ -116,6 +120,7 @@ function querANO() {
     document.getElementById("querAll").className = '';
 }
 function createRoom() {
+    further()
     question_serial_number = 0;
     var name = document.getElementById("name").value
     var pass = document.getElementById("pass").value
@@ -196,6 +201,7 @@ function hideWriteQuestion() {
     document.getElementById("write_question").style.transform = 'translateY(+100vh)'
 }
 function searchRoom() {
+    further()
     question_serial_number = 0;
     var name = document.getElementById("name1").value
     var pass = document.getElementById("pass1").value
@@ -482,7 +488,7 @@ function further() {
     document.getElementById("chat_input").style.animation = 'pulsarMin 1s infinite';
     waitUsers()
 }
-function waitUsers() {
+/*function waitUsers() {
     var quer = 'SELECT * FROM review_for_question WHERE question_id == ' + question_id;
     executeQuery(quer)
     .then(reviewCount => { 
@@ -527,4 +533,4 @@ function openMsg() {
 }
 function closeName() {
     document.getElementById("open_name_user").style.transform = 'translateY(+100vh)';
-}
+}*/
