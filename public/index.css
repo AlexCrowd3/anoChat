@@ -142,15 +142,16 @@ body {
     font-weight: 300;
 }
 #but-start-game {
+    position: absolute;
+    left: 10%;
+    bottom: 20px;
     text-align: center;
     height: 54px;
     width: 80%;
-    margin-left: 10%;
     font-size: 32pt;
     border: solid 2px #fff;
     border-radius: 15px;
     color: #fff;
-    margin-top: 5vh;
 }
 #profilWindow {
     z-index: 2;
@@ -560,7 +561,7 @@ body {
     color: #fff;
     font-size: 14pt;
     transition: 0.5s;
-    transform: translateY(-40vh);
+    transform: translateY(-80vh);
 }
 #search_players {
     z-index: 2;
