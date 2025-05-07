@@ -1,160 +1,136 @@
 // script.js
-let currentRoom = null;
 let mainUserId = 0;
 let roomId = 0;
-let questionId = 0;
+let currentQuestionId = 0;
 let globalUserCount = 3;
-let usersCount = 0;
-let passForLoad = false;
-let list = [];
-let questionSerialNumber = 0;
+let userList = [];
+let questionSerial = 0;
 
-// Базовый метод выполнения запросов
+// Базовые функции
 async function executeQuery(sql, params = []) {
     try {
         const response = await fetch('https://alexcrowd3-anochat-f80f.twc1.net/query', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ 
-                sql: sql.replace(/\n/g, ' '), 
-                params: params.map(p => p.toString()) 
-            }),
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({sql, params: params.map(p => p.toString())})
         });
 
-        if (!response.ok) {
-            const errorData = await response.text();
-            throw new Error(`HTTP error! status: ${response.status}\n${errorData}`);
-        }
-
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            const text = await response.text();
-            throw new Error(`Invalid content type: ${contentType}\nResponse: ${text}`);
-        }
-
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`);
         return await response.json();
     } catch (error) {
-        console.error('Query Error:', {
-            sql,
-            params,
-            error: error.message
-        });
-        showError(`Database error: ${error.message}`);
+        showError(`Ошибка запроса: ${error.message}`);
         throw error;
     }
 }
 
-// Инициализация при загрузке
-window.addEventListener('load', async () => {
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        mainUserId = parseInt(urlParams.get('main_id')) || 0;
-
-        // Очистка предыдущих подключений
-        await executeQuery(
-            `DELETE FROM user_in_game_room 
-             WHERE user_id = ?`,
-            [mainUserId]
-        );
-
-        // Загрузка баланса пользователя
-        if (mainUserId > 0) {
-            const result = await executeQuery(
-                `SELECT coin_count 
-                 FROM users 
-                 WHERE id = ?`,
-                [mainUserId]
-            );
-            
-            if (result.length > 0) {
-                document.getElementById("count").textContent = result[0].coin_count;
-            }
-        }
-    } catch (error) {
-        console.error('Initialization error:', error);
-    }
-});
-
-// Функции интерфейса
 function showError(text) {
     const errWindow = document.getElementById("ErrorWindow");
     errWindow.innerHTML = text;
     errWindow.style.transform = 'translateY(0)';
-    setTimeout(() => {
-        errWindow.style.transform = 'translateY(-60vh)';
-    }, 4000);
+    setTimeout(() => errWindow.style.transform = 'translateY(-60vh)', 4000);
 }
 
-function animateInput(id) {
-    const element = document.getElementById(id);
-    element.style.animation = 'inpError 0.5s';
-    setTimeout(() => element.style.animation = '', 500);
-}
-
-// Профиль пользователя
-async function getProfil() {
+// Инициализация
+window.addEventListener('load', async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    mainUserId = parseInt(urlParams.get('main_id')) || 0;
+    
     try {
-        if (mainUserId === 0) {
-            document.getElementById("profilWindow").innerHTML = `
-                <p onclick="hideProfil()">Скрыть</p>
-                <img src="img/profil_icon_0.png">
-                <p>Для входа используйте Telegram бота</p>`;
-        } else {
-            const result = await executeQuery(
-                `SELECT name, last_name, coin_count, date_of_registration 
-                 FROM users 
-                 WHERE id = ?`,
+        await executeQuery(
+            "DELETE FROM user_in_game_room WHERE user_id = ?",
+            [mainUserId]
+        );
+        
+        if (mainUserId > 0) {
+            const userData = await executeQuery(
+                "SELECT coin_count FROM users WHERE id = ?",
                 [mainUserId]
             );
-            
+            document.getElementById("count").textContent = userData[0]?.coin_count || 0;
+        }
+    } catch (error) {
+        console.error("Init error:", error);
+    }
+});
+
+// Профиль
+window.getProfil = async () => {
+    try {
+        let htmlContent;
+        if (mainUserId === 0) {
+            htmlContent = `
+                <p id="but-hide" onclick="hideProfil()">Скрыть</p>
+                <img src="img/profil_icon_0.png" style="height:150px;">
+                <p style="color:#6D6D6D;margin-top:30px;">
+                    Для входа используйте 
+                    <a href="https://t.me/chat_ano_bot?start" style="color:#43A7FD;">Telegram бота</a>
+                </p>`;
+        } else {
+            const result = await executeQuery(
+                "SELECT name, last_name, coin_count, date_of_registration FROM users WHERE id = ?",
+                [mainUserId]
+            );
             const user = result[0];
-            document.getElementById("profilWindow").innerHTML = `
-                <p onclick="hideProfil()">Скрыть</p>
-                <img src="img/profil_icon_1.png">
-                <h1>${user.name} ${user.last_name}</h1>
-                <p>Баланс: ${user.coin_count} <img src="img/n-coin.svg"></p>
-                <p>Регистрация: ${user.date_of_registration}</p>`;
+            htmlContent = `
+                <p id="but-hide" onclick="hideProfil()">Скрыть</p>
+                <img src="img/profil_icon_1.png" style="height:150px;">
+                <h1 style="font-size:30px;color:#353535;">${user.name} ${user.last_name}</h1>
+                <p style="font-size:30px;color:#6D6D6D;">
+                    Баланс: ${user.coin_count} <img src="img/n-coin.svg" style="height:30px;">
+                    <br>Регистрация: ${user.date_of_registration}
+                </p>`;
         }
         
+        document.getElementById("profilWindow").innerHTML = htmlContent;
         document.getElementById("profilWindow").style.transform = 'translateY(0)';
         document.getElementById("opasity-win").style.transform = 'translateY(0)';
     } catch (error) {
-        showError('Ошибка загрузки профиля');
+        showError("Ошибка загрузки профиля");
     }
-}
+};
 
-// Логика комнат
-async function createRoom() {
+window.hideProfil = () => {
+    document.getElementById("profilWindow").style.transform = 'translateY(+600px)';
+    document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
+};
+
+// Комнаты
+window.startGame = () => {
+    document.getElementById("start-game").style.transform = 'translateY(0)';
+    document.getElementById("opasity-win").style.transform = 'translateY(0)';
+};
+
+window.makeRoom = () => {
+    document.getElementById("roomGame").style.transform = 'translateY(0)';
+};
+
+window.setValueInput = () => {
+    const value = document.getElementById('Player_count').value;
+    document.getElementById("input_value").textContent = value;
+    document.getElementById("input_value").style.marginLeft = 
+        `calc(9% - 10px + ${(89 / 7) * (value - 3)}%)`;
+};
+
+window.createRoom = async () => {
+    const name = document.getElementById("name").value;
+    const pass = document.getElementById("pass").value;
+    const count = document.getElementById("Player_count").value;
+    const mode = document.getElementById("querAll").classList.contains('active') ? 2 : 1;
+
     try {
-        const name = document.getElementById("name").value;
-        const pass = document.getElementById("pass").value;
-        const count = parseInt(document.getElementById("Player_count").value);
-        const mode = document.querySelector('.active').id === 'querAll' ? 2 : 1;
-
-        // Валидация
-        if (!name || !pass) {
-            if (!name) animateInput('name');
-            if (!pass) animateInput('pass');
-            return;
-        }
-
         // Проверка существующей комнаты
         const existing = await executeQuery(
-            `SELECT id 
-             FROM game_room 
-             WHERE room_name = ?`,
+            "SELECT id FROM game_room WHERE room_name = ?",
             [name]
         );
-
+        
         if (existing.length > 0) {
-            showError('Комната с таким именем уже существует!');
+            showError("Комната уже существует!");
             return;
         }
 
         // Создание комнаты
-        const createResult = await executeQuery(
+        const result = await executeQuery(
             `INSERT INTO game_room 
                 (user_count, room_mode, room_name, room_password) 
              VALUES (?, ?, ?, ?)
@@ -162,9 +138,9 @@ async function createRoom() {
             [count, mode, name, pass]
         );
         
-        roomId = createResult[0].id;
+        roomId = result[0].id;
 
-        // Создание вопросов для режима ANO
+        // Генерация вопросов
         if (mode === 1) {
             await executeQuery(
                 `INSERT INTO questions_in_game_room 
@@ -177,26 +153,24 @@ async function createRoom() {
             );
         }
 
-        // Присоединение к комнате
+        // Присоединение
         await executeQuery(
-            `INSERT INTO user_in_game_room 
-                (user_id, room_id) 
-             VALUES (?, ?)`,
+            "INSERT INTO user_in_game_room (user_id, room_id) VALUES (?, ?)",
             [mainUserId, roomId]
         );
 
-        // Обновление интерфейса
+        // Запуск
         document.getElementById("roomGame").style.transform = 'translateY(-100vh)';
-        startUserLoading(roomId, count);
+        startUserMonitoring(roomId, count);
     } catch (error) {
-        showError(`Ошибка создания комнаты: ${error.message}`);
+        showError(`Ошибка создания: ${error.message}`);
     }
-}
+};
 
-// Загрузка пользователей
-async function startUserLoading(roomId, maxUsers) {
-    try {
-        const interval = setInterval(async () => {
+// Мониторинг пользователей
+async function startUserMonitoring(roomId, maxUsers) {
+    const interval = setInterval(async () => {
+        try {
             const users = await executeQuery(
                 `SELECT u.id, u.name 
                  FROM user_in_game_room ugr
@@ -205,19 +179,19 @@ async function startUserLoading(roomId, maxUsers) {
                 [roomId]
             );
             
-            updateUserList(users);
+            updateUserInterface(users);
             
             if (users.length >= maxUsers) {
                 clearInterval(interval);
-                startGameSession(roomId);
+                startGameProcess(roomId);
             }
-        }, 1000);
-    } catch (error) {
-        showError(`Ошибка загрузки пользователей: ${error.message}`);
-    }
+        } catch (error) {
+            console.error("Monitoring error:", error);
+        }
+    }, 1000);
 }
 
-function updateUserList(users) {
+function updateUserInterface(users) {
     const container = document.getElementById("usersInRoom");
     container.innerHTML = users.map(user => `
         <div class="users">
@@ -230,39 +204,82 @@ function updateUserList(users) {
         `${users.length}/${globalUserCount}`;
 }
 
-// Остальные функции остаются аналогичными, но с исправленными запросами
-// ...
-
-// Пример исправленного запроса для поиска комнаты
-async function searchRoom() {
+// Игровой процесс
+async function startGameProcess(roomId) {
     try {
-        const name = document.getElementById("name1").value;
-        const pass = document.getElementById("pass1").value;
-
-        const result = await executeQuery(
-            `SELECT id 
-             FROM game_room 
-             WHERE room_name = ? 
-             AND room_password = ?`,
-            [name, pass]
+        const roomInfo = await executeQuery(
+            "SELECT room_mode FROM game_room WHERE id = ?",
+            [roomId]
         );
-
-        if (result.length === 0) {
-            showError('Неверное имя комнаты или пароль');
-            return;
-        }
-
-        roomId = result[0].id;
         
-        await executeQuery(
-            `INSERT INTO user_in_game_room 
-                (user_id, room_id) 
-             VALUES (?, ?)`,
-            [mainUserId, roomId]
-        );
-
-        startUserLoading(roomId, result[0].user_count);
+        if (roomInfo[0].room_mode === 1) {
+            openChatInterface();
+        } else {
+            showQuestionInput();
+        }
     } catch (error) {
-        showError(`Ошибка входа в комнату: ${error.message}`);
+        showError("Ошибка запуска игры");
     }
 }
+
+window.openChatInterface = () => {
+    document.getElementById("chat_room").style.transform = 'translateY(0)';
+    loadChatHistory();
+};
+
+async function loadChatHistory() {
+    try {
+        const questions = await executeQuery(
+            "SELECT * FROM questions_in_game_room WHERE room_id = ?",
+            [roomId]
+        );
+        
+        const chatContainer = document.getElementById("chat");
+        chatContainer.innerHTML = questions.map(q => `
+            <div class="message_block">
+                <p class="question">${q.question}</p>
+            </div>
+        `).join('');
+    } catch (error) {
+        showError("Ошибка загрузки чата");
+    }
+}
+
+// Остальные обработчики
+window.readyMessage = async () => {
+    const input = document.getElementById("inp_chat");
+    const message = input.value.trim();
+    
+    if (!message) {
+        input.style.animation = 'inpError 0.5s';
+        setTimeout(() => input.style.animation = '', 500);
+        return;
+    }
+
+    try {
+        await executeQuery(
+            "INSERT INTO review_for_question (question_id, review, user_id) VALUES (?, ?, ?)",
+            [currentQuestionId, message, mainUserId]
+        );
+        input.value = '';
+        checkAnswers();
+    } catch (error) {
+        showError("Ошибка отправки");
+    }
+};
+
+// Вспомогательные функции
+window.hideStartGame = () => {
+    document.getElementById("start-game").style.transform = 'translateY(+400px)';
+    document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
+};
+
+window.querAll = () => {
+    document.getElementById("querANO").className = '';
+    document.getElementById("querAll").className = 'active';
+};
+
+window.querANO = () => {
+    document.getElementById("querANO").className = 'active';
+    document.getElementById("querAll").className = '';
+};
