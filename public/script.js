@@ -5,6 +5,7 @@ let currentQuestionId = 0;
 let globalUserCount = 3;
 let userList = [];
 let questionSerial = 0;
+let intervalId;
 
 // Базовые функции
 async function executeQuery(sql, params = []) {
@@ -12,7 +13,10 @@ async function executeQuery(sql, params = []) {
         const response = await fetch('https://alexcrowd3-anochat-f80f.twc1.net/query', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({sql, params: params.map(p => p.toString())})
+            body: JSON.stringify({
+                sql: sql.replace(/\s+/g, ' '),
+                params: params.map(p => p.toString())
+            })
         });
 
         if (!response.ok) throw new Error(`HTTP error ${response.status}`);
@@ -59,7 +63,7 @@ window.getProfil = async () => {
         let htmlContent;
         if (mainUserId === 0) {
             htmlContent = `
-                <p id="but-hide" onclick="hideProfil()">Скрыть</p>
+                <p onclick="hideProfil()">Скрыть</p>
                 <img src="img/profil_icon_0.png" style="height:150px;">
                 <p style="color:#6D6D6D;margin-top:30px;">
                     Для входа используйте 
@@ -72,7 +76,7 @@ window.getProfil = async () => {
             );
             const user = result[0];
             htmlContent = `
-                <p id="but-hide" onclick="hideProfil()">Скрыть</p>
+                <p onclick="hideProfil()">Скрыть</p>
                 <img src="img/profil_icon_1.png" style="height:150px;">
                 <h1 style="font-size:30px;color:#353535;">${user.name} ${user.last_name}</h1>
                 <p style="font-size:30px;color:#6D6D6D;">
@@ -94,7 +98,7 @@ window.hideProfil = () => {
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
 };
 
-// Комнаты
+// Логика комнат
 window.startGame = () => {
     document.getElementById("start-game").style.transform = 'translateY(0)';
     document.getElementById("opasity-win").style.transform = 'translateY(0)';
@@ -118,7 +122,6 @@ window.createRoom = async () => {
     const mode = document.getElementById("querAll").classList.contains('active') ? 2 : 1;
 
     try {
-        // Проверка существующей комнаты
         const existing = await executeQuery(
             "SELECT id FROM game_room WHERE room_name = ?",
             [name]
@@ -129,7 +132,6 @@ window.createRoom = async () => {
             return;
         }
 
-        // Создание комнаты
         const result = await executeQuery(
             `INSERT INTO game_room 
                 (user_count, room_mode, room_name, room_password) 
@@ -140,7 +142,6 @@ window.createRoom = async () => {
         
         roomId = result[0].id;
 
-        // Генерация вопросов
         if (mode === 1) {
             await executeQuery(
                 `INSERT INTO questions_in_game_room 
@@ -153,13 +154,11 @@ window.createRoom = async () => {
             );
         }
 
-        // Присоединение
         await executeQuery(
             "INSERT INTO user_in_game_room (user_id, room_id) VALUES (?, ?)",
             [mainUserId, roomId]
         );
 
-        // Запуск
         document.getElementById("roomGame").style.transform = 'translateY(-100vh)';
         startUserMonitoring(roomId, count);
     } catch (error) {
@@ -169,7 +168,7 @@ window.createRoom = async () => {
 
 // Мониторинг пользователей
 async function startUserMonitoring(roomId, maxUsers) {
-    const interval = setInterval(async () => {
+    intervalId = setInterval(async () => {
         try {
             const users = await executeQuery(
                 `SELECT u.id, u.name 
@@ -179,10 +178,10 @@ async function startUserMonitoring(roomId, maxUsers) {
                 [roomId]
             );
             
-            updateUserInterface(users);
+            updateUserInterface(users, maxUsers);
             
             if (users.length >= maxUsers) {
-                clearInterval(interval);
+                clearInterval(intervalId);
                 startGameProcess(roomId);
             }
         } catch (error) {
@@ -191,7 +190,7 @@ async function startUserMonitoring(roomId, maxUsers) {
     }, 1000);
 }
 
-function updateUserInterface(users) {
+function updateUserInterface(users, maxUsers) {
     const container = document.getElementById("usersInRoom");
     container.innerHTML = users.map(user => `
         <div class="users">
@@ -201,7 +200,7 @@ function updateUserInterface(users) {
     `).join('');
 
     document.getElementById("user_count_in_connect").textContent = 
-        `${users.length}/${globalUserCount}`;
+        `${users.length}/${maxUsers}`;
 }
 
 // Игровой процесс
@@ -214,6 +213,7 @@ async function startGameProcess(roomId) {
         
         if (roomInfo[0].room_mode === 1) {
             openChatInterface();
+            loadGameQuestions();
         } else {
             showQuestionInput();
         }
@@ -222,30 +222,27 @@ async function startGameProcess(roomId) {
     }
 }
 
-window.openChatInterface = () => {
-    document.getElementById("chat_room").style.transform = 'translateY(0)';
-    loadChatHistory();
-};
-
-async function loadChatHistory() {
+async function loadGameQuestions() {
     try {
         const questions = await executeQuery(
-            "SELECT * FROM questions_in_game_room WHERE room_id = ?",
+            "SELECT * FROM questions_in_game_room WHERE room_id = ? ORDER BY serial_number",
             [roomId]
         );
         
-        const chatContainer = document.getElementById("chat");
-        chatContainer.innerHTML = questions.map(q => `
-            <div class="message_block">
-                <p class="question">${q.question}</p>
-            </div>
-        `).join('');
+        if (questions.length > 0) {
+            currentQuestionId = questions[0].id;
+            document.getElementById("question_inchat").textContent = questions[0].question;
+        }
     } catch (error) {
-        showError("Ошибка загрузки чата");
+        showError("Ошибка загрузки вопросов");
     }
 }
 
-// Остальные обработчики
+window.openChatInterface = () => {
+    document.getElementById("chat_room").style.transform = 'translateY(0)';
+};
+
+// Отправка сообщений
 window.readyMessage = async () => {
     const input = document.getElementById("inp_chat");
     const message = input.value.trim();
@@ -268,7 +265,84 @@ window.readyMessage = async () => {
     }
 };
 
-// Вспомогательные функции
+async function checkAnswers() {
+    const interval = setInterval(async () => {
+        try {
+            const result = await executeQuery(
+                "SELECT COUNT(*) as count FROM review_for_question WHERE question_id = ?",
+                [currentQuestionId]
+            );
+            
+            if (result[0].count >= globalUserCount) {
+                clearInterval(interval);
+                displayAllMessages();
+            }
+        } catch (error) {
+            console.error("Check error:", error);
+        }
+    }, 1000);
+}
+
+// Восстановленные функции
+window.further = async () => {
+    try {
+        await executeQuery(
+            "DELETE FROM review_for_question WHERE user_id = ?",
+            [mainUserId]
+        );
+        
+        document.getElementById("chat_input").innerHTML = '<p>Ждем остальных</p>';
+        document.getElementById("chat_input").style.animation = 'pulsarMin 1s infinite';
+        waitForNextQuestion();
+    } catch (error) {
+        showError("Ошибка перехода: " + error.message);
+    }
+};
+
+async function waitForNextQuestion() {
+    const interval = setInterval(async () => {
+        try {
+            const result = await executeQuery(
+                "SELECT COUNT(*) as count FROM review_for_question WHERE question_id = ?",
+                [currentQuestionId]
+            );
+            
+            if (result[0].count === 0) {
+                clearInterval(interval);
+                questionSerial++;
+                loadNextQuestion();
+            }
+        } catch (error) {
+            console.error("Wait error:", error);
+        }
+    }, 1000);
+}
+
+async function loadNextQuestion() {
+    try {
+        const questions = await executeQuery(
+            "SELECT * FROM questions_in_game_room WHERE room_id = ? AND serial_number = ?",
+            [roomId, questionSerial]
+        );
+        
+        if (questions.length > 0) {
+            currentQuestionId = questions[0].id;
+            document.getElementById("question_inchat").textContent = questions[0].question;
+            openChatInterface();
+        } else {
+            endGame();
+        }
+    } catch (error) {
+        showError("Ошибка загрузки вопроса: " + error.message);
+    }
+}
+
+function endGame() {
+    document.getElementById("chat_room").style.transform = 'translateY(+100vh)';
+    showError("Игра завершена!");
+}
+
+// Дополнительные обработчики
 window.hideStartGame = () => {
     document.getElementById("start-game").style.transform = 'translateY(+400px)';
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
