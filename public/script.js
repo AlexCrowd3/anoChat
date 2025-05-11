@@ -79,10 +79,6 @@ function hideStartGame() {
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
 }
 function startGame() {
-    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT 1 FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
-    executeQuery(quer)
-    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT 1 FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
-    executeQuery(quer)
     document.getElementById("start-game").style.transform = 'translateY(0)';
     document.getElementById("opasity-win").style.transform = 'translateY(0)';
 }
