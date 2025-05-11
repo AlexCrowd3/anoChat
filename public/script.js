@@ -38,6 +38,10 @@ async function executeQuery(sql, params = []) {
     }
 }
 window.addEventListener('load', () => {
+    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT 1 FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
+    executeQuery(quer)
+    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT 1 FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
+    executeQuery(quer)
     quer = 'SELECT * FROM users WHERE telegram_id == ' + urlParam;
     executeQuery(quer)
         .then(rows => {
@@ -75,6 +79,10 @@ function hideStartGame() {
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
 }
 function startGame() {
+    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT 1 FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
+    executeQuery(quer)
+    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT 1 FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
+    executeQuery(quer)
     document.getElementById("start-game").style.transform = 'translateY(0)';
     document.getElementById("opasity-win").style.transform = 'translateY(0)';
 }
@@ -495,36 +503,4 @@ function waitUsers() {
             setTimeout(() => waitUsers(), 1000);
         }
     })
-}
-function openName() {
-    var quer = 'SELECT * FROM users WHERE id == ' + main_id;
-    executeQuery(quer)
-    .then(userInfo => { 
-        if (parseInt(userInfo[0].coin_count) < 5) {
-            closeButton()
-            document.getElementById("ErrorWindow").innerHTML = 'Упс...<br>На вашем счету не хватает монет!<br>Их можно пополнить в нашем телеграм боте';
-            document.getElementById("ErrorWindow").style.transform = 'translateY(0vh)'
-            setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-30vh)',4000);
-        } else {
-            closeButton()
-            var quer = 'UPDATE users SET coin_count = REPLACE(coin_count, ' + userInfo[0].coin_count + ', ' + (parseInt(userInfo[0].coin_count) - 5) +') WHERE id == ' + main_id;
-            executeQuery(quer)
-            var quer = 'SELECT * FROM users WHERE id == ' + msg_id;
-            executeQuery(quer)
-            .then(userName => {
-                document.getElementById("name_title_msg").innerHTML = 'Это написал<br>' + userName[0].name + ' ' + userName[0].last_name;
-                openMsg();
-            })
-            executeQuery('SELECT coin_count FROM users WHERE id == ?', [main_id])
-            .then(rows => {
-                document.getElementById("count").innerHTML = rows[0].coin_count;
-            })
-        }
-    })
-}
-function openMsg() {
-    document.getElementById("open_name_user").style.transform = 'translateY(0)';
-}
-function closeName() {
-    document.getElementById("open_name_user").style.transform = 'translateY(+100vh)';
 }
