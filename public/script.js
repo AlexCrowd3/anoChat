@@ -38,9 +38,9 @@ async function executeQuery(sql, params = []) {
     }
 }
 window.addEventListener('load', () => {
-    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT * FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
+    quer = 'DELETE FROM questions_in_game_room WHERE NOT EXISTS ( SELECT 1 FROM review_for_question r WHERE r.question_id = questions_in_game_room.id )';
     executeQuery(quer)
-    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT * FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
+    quer = 'DELETE FROM game_room WHERE NOT EXISTS ( SELECT 1 FROM questions_in_game_room q WHERE q.room_id = game_room.id )';
     executeQuery(quer)
     quer = 'SELECT * FROM users WHERE telegram_id == ' + urlParam;
     executeQuery(quer)
@@ -79,6 +79,7 @@ function hideStartGame() {
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
 }
 function startGame() {
+    further()
     document.getElementById("start-game").style.transform = 'translateY(0)';
     document.getElementById("opasity-win").style.transform = 'translateY(0)';
 }
@@ -167,7 +168,7 @@ function createRoom() {
             } else {
                 document.getElementById("ErrorWindow").innerHTML = 'Ошибка:<br>Такая комната уже существует!';
                 document.getElementById("ErrorWindow").style.transform = 'translateY(0vh)'
-                setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-40vh)', 4000);
+                setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-60vh)', 4000);
             }
         })
     } else {
@@ -209,7 +210,7 @@ function searchRoom() {
         if (rows.length === 0) {
             document.getElementById("ErrorWindow").innerHTML = 'Упс...<br>Не нашли такую комнату<br>Проверьте написание имя комнаты или пароля!';
             document.getElementById("ErrorWindow").style.transform = 'translateY(0vh)'
-            setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-30vh)',4000);
+            setTimeout(() => document.getElementById("ErrorWindow").style.transform = 'translateY(-60vh)',4000);
             if (name == "") {
                 document.getElementById("name1").style.animation = 'inpError 0.5s forwards'
                 setTimeout(() => document.getElementById("name1").style.animation = '',500);
@@ -485,18 +486,4 @@ function further() {
     document.getElementById("chat_input").innerHTML = '<p>Ждем остальных</p>';
     document.getElementById("chat_input").style.animation = 'pulsarMin 1s infinite';
     waitUsers()
-}
-function waitUsers() {
-    var quer = 'SELECT * FROM review_for_question WHERE question_id == ' + question_id;
-    executeQuery(quer)
-    .then(reviewCount => { 
-        if (reviewCount.length == 0) {
-            question_serial_number += 1;
-            pass_for_delete = true;
-            document.getElementById("chat_input").style.animation = '';
-            openChatRoom()
-        } else {
-            setTimeout(() => waitUsers(), 1000);
-        }
-    })
 }
