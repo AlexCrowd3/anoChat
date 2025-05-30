@@ -79,7 +79,6 @@ function hideStartGame() {
     document.getElementById("opasity-win").style.transform = 'translateY(+100vh)';
 }
 function startGame() {
-    further()
     document.getElementById("start-game").style.transform = 'translateY(0)';
     document.getElementById("opasity-win").style.transform = 'translateY(0)';
 }
