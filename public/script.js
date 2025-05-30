@@ -335,7 +335,7 @@ function openChatRoom() {
         } else {
             question_id = parseInt(list2[0].id);
             document.getElementById("chat").innerHTML = '<p id="question_inchat"></p>';
-            document.getElementById("question_inchat").innerHTML = 'Вопрос:<br>' + list2[0].question;
+            document.getElementById("question_inchat").innerHTML = 'Вопрос:<br>' + list2[question_serial_number].question;
             chat_string = '<p id="question_inchat">Вопрос:<br>' + list2[0].question + '</p>';
         }
     })
