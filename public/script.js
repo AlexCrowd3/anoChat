@@ -482,6 +482,8 @@ function sendAllMessage() {
 function further() {
     var quer = 'DELETE FROM review_for_question WHERE user_id == ' + main_id;
     executeQuery(quer)
+    var quer = 'DELETE FROM review_for_question WHERE user_id == ' + main_id;
+    executeQuery(quer)
     document.getElementById("chat_input").innerHTML = '<p>Ждем остальных</p>';
     document.getElementById("chat_input").style.animation = 'pulsarMin 1s infinite';
     waitUsers()
@@ -496,7 +498,7 @@ function waitUsers() {
             document.getElementById("chat_input").style.animation = '';
             openChatRoom()
         } else {
-            setTimeout(() => waitUsers(), 1000);
+            setTimeout(() => waitUsers(), 2000);
         }
     })
 }
