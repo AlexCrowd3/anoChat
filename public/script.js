@@ -320,10 +320,10 @@ function openChatRoom() {
         document.getElementById("load_msg_window").style.animation = '';
         document.getElementById("load_logo_in_win").style.animation = '';
     }, 6000)
-    /*if (pass_for_delete == true) {
+    if (pass_for_delete == true) {
         var quer = 'DELETE FROM questions_in_game_room WHERE serial_number == ' + question_serial_number;
         executeQuery(quer)
-    }*/
+    }
     document.getElementById("chat_input").innerHTML = '<input type="text" id="inp_chat" placeholder="Пиши тут..."><img src="img/send.svg" alt="" onclick="readyMessage()">'
     document.getElementById("chat_input").onclick = 'openKeyboard';
     document.getElementById("chat_room").style.transform = 'translateY(0px)';
